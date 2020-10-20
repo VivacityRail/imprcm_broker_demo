@@ -1,0 +1,505 @@
+﻿{
+  "schemaName": "XIRCM_ugms_provider_csv",
+  "schemaVersion": "0.02",
+  "schemaFlavour": "Hitachi",
+  "schemaCopyright": "RSSB 2019",
+  "fields": [
+    {
+      "name": "file_timestamp_utc",
+      "title": "Timestamp of creation of file or datagram",
+      "group": "Meta",
+      "rank": "core",
+      "type": "datetime",
+      "format": "%Y-%m-%dT%H:%M:%SZ",
+      "description": "data provider from file name",
+      "constraints": {
+        "required": true,
+        "unique": true,
+        "pattern": "YYYY-MM-DDTHH:MM:SSZ"
+      }
+    },
+    {
+      "name": "file_name",
+      "title": "Name of file or datagram",
+      "group": "Meta",
+      "rank": "core",
+      "type": "string",
+      "description": "data provider from file name",
+      "constraints": {
+        "required": true,
+        "unique": false,
+        "maxLength": 255
+      }
+    },
+    {
+      "name": "file_uid",
+      "title": "UUID of file, supplied by data provider",
+      "group": "Meta",
+      "rank": "core",
+      "type": "string",
+      "format": "uuid",
+      "description": "supplied by data provider",
+      "constraints": {
+        "required": true,
+        "unique": true
+      }
+    },
+    {
+      "name": "data_row_validity_flags",
+      "title": "String of characters representing the current validity status of each data item",
+      "group": "Meta",
+      "rank": "core",
+      "type": "string",
+      "description": "number of chars = no of columns. ",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 511
+      }
+    },
+    {
+      "name": "extended_items_metadata",
+      "title": "Application-specific extended data items",
+      "group": "Meta",
+      "rank": "vend",
+      "type": "object",
+      "description": "Application-specific data items, formatted as a JSON object",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 32767
+      }
+    },
+    {
+      "name": "timestamp_recorded_utc",
+      "title": "Timestamp of when data row recorded",
+      "group": "Time",
+      "rank": "core",
+      "type": "datetime",
+      "format": "%Y-%m-%dT%H:%M:%S.%fZ",
+      "description": "as precise as can be made so consecutive data rows have different values",
+      "constraints": {
+        "required": true,
+        "unique": true,
+        "pattern": "YYYY-MM-DDTHH:MM:SS.dddddZ"
+      }
+    },
+    {
+      "name": "extended_items_time",
+      "title": "Application-specific extended data items",
+      "group": "Time",
+      "rank": "vend",
+      "type": "object",
+      "description": "Application-specific data items, formatted as a JSON object",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 32767
+      }
+    },
+    {
+      "name": "rail_unit_id",
+      "title": "Identifier of rail vehicle, locomotive or multiple unit on which sensor equipment is mounted",
+      "group": "Equip",
+      "rank": "core",
+      "type": "string",
+      "description": "data provider from file name",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 100
+      }
+    },
+    {
+      "name": "ugms_unit_id",
+      "title": "Identifier of UGMS unit",
+      "group": "Equip",
+      "rank": "core",
+      "type": "string",
+      "description": "vendor name for the UGMS unit",
+      "constraints": {
+        "required": true,
+        "unique": false,
+        "maxLength": 100
+      }
+    },
+    {
+      "name": "ugms_unit_uid",
+      "title": "UUID of UGMS unit",
+      "group": "Equip",
+      "rank": "core",
+      "type": "string",
+      "format": "uuid",
+      "description": "supplied by data provider",
+      "constraints": {
+        "required": true,
+        "unique": false
+      }
+    },
+    {
+      "name": "extended_items_equipment",
+      "title": "Application-specific extended data items",
+      "group": "Equip",
+      "rank": "vend",
+      "type": "object",
+      "description": "Application-specific data items, formatted as a JSON object",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 32767
+      }
+    },
+    {
+      "name": "train_id",
+      "title": "Train ID",
+      "group": "Train",
+      "rank": "opt",
+      "type": "string",
+      "description": "is this a unique train id?",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 40
+      }
+    },
+    {
+      "name": "tacho_count",
+      "title": "Tachometer / odometer pulses, as recorded",
+      "group": "Travel",
+      "rank": "core",
+      "type": "number",
+      "description": "as recorded - uncalibrated / not mapped to geo location"
+    },
+    {
+      "name": "gps_fix_quality",
+      "title": "GPS fix quality",
+      "group": "Travel",
+      "rank": "core",
+      "type": "number",
+      "description": "in format of NMEA http://aprs.gids.nl/nmea/ fix quality in $GPGGA"
+    },
+    {
+      "name": "gps_latitude_deg",
+      "title": "GPS latitude, decimal degress. +ve = North, -ve = South",
+      "group": "Travel",
+      "rank": "core",
+      "type": "number",
+      "description": "decimal degrees, -ve = South of equator. 6dps"
+    },
+    {
+      "name": "gps_longitude_deg",
+      "title": "GPS longitued, decimal degress. +ve = East, -ve = West",
+      "group": "Travel",
+      "rank": "core",
+      "type": "number",
+      "description": "decimal degrees, -ve = West of Greenwich 6dps"
+    },
+    {
+      "name": "gps_ground_speed_m_s",
+      "title": "GPS ground speed, metres per second",
+      "group": "Travel",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "speed_as_recorded",
+      "title": "Speed, as recorded",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "directly from input data"
+    },
+    {
+      "name": "speed_as_recorded_unit",
+      "title": "Speed units, as recorded",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "string",
+      "description": "actual unit as recorded - may be mph / kph / m_s",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 20
+      }
+    },
+    {
+      "name": "elapsed_distance_as_recorded_m",
+      "title": "Elapsed distance as recorded, metres",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "convert from elapsed_distance_km"
+    },
+    {
+      "name": "gps_acquisition_mode",
+      "title": "GPS acquistion mode",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "string",
+      "description": "per relevant NMEA frame",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 255
+      }
+    },
+    {
+      "name": "gps_altitude_m",
+      "title": "GPS altitude",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "gps_detail_of_satellites",
+      "title": "GPS satellite detail",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "string",
+      "description": "per relevant NMEA frame",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 255
+      }
+    },
+    {
+      "name": "gps_dgps_station_id",
+      "title": "GPS differential GPS station identifier",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "string",
+      "description": "per relevant NMEA frame",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 255
+      }
+    },
+    {
+      "name": "gps_ground_speed_km_h",
+      "title": "GPS ground speed, kilometres per hour",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "gps_height_of_geoid_m",
+      "title": "GPS height of geoid",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "gps_hdop_m",
+      "title": "GPS horizontal dilution of precision",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "gps_magnetic_track_made_good",
+      "title": "GPS magnetic track made good",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "gps_number_of_satellites",
+      "title": "GPS number of satellites in view",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "integer",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "gps_pdop_m",
+      "title": "GPS position dilution of precision",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "gps_position_mode",
+      "title": "GPS position mode",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "string",
+      "description": "per relevant NMEA frame",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 255
+      }
+    },
+    {
+      "name": "gps_satellites_used",
+      "title": "GPS number of satellites used",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "gps_seconds_since_last_dgps",
+      "title": "GPS seconds since last use of differential GPS",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "gps_status",
+      "title": "GPS status",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "string",
+      "description": "per relevant NMEA frame",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 255
+      }
+    },
+    {
+      "name": "gps_true_track_made_good",
+      "title": "GPS true track made good",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "gps_utc_time",
+      "title": "GPS timestamp as ISO 8601 string",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "datetime",
+      "format": "%Y-%m-%dT%H:%M:%S.%fZ",
+      "description": "ISO-8601 to whatever precision the source offers",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "pattern": "YYYY-MM-DDTHH:MM:SS.dddddZ"
+      }
+    },
+    {
+      "name": "gps_vdop",
+      "title": "GPS vertical dilution of precision, metres",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "per relevant NMEA frame"
+    },
+    {
+      "name": "left_top_35m_mm",
+      "title": "Left rail top, 35m filter, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "right_top_35m_mm",
+      "title": "Right rail top, 35m filter, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "crosslevel_mm",
+      "title": "Cross-level, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "twist_3m_mm",
+      "title": "Twist on 3m baseline, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "mean_alignment_35m_mm",
+      "title": "Mean alignment, 35m baseline, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "gauge_mm",
+      "title": "Track gauge, difference from standard, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "left_top_70m_mm",
+      "title": "Left rail top, 70m baseline, mm",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "right_top_70m_mm",
+      "title": "Right rail top, 70m baseline, mm",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "mean_top_70m_mm",
+      "title": "Mean top, 70m baseline, mm",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "mean_alignment_70m_mm",
+      "title": "Mean alignment, 70m baseline, mm",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "twist_5m_mm",
+      "title": "Twist on 5m baseline, mm",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "gradient_deg",
+      "title": "Gradient, degrees",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number",
+      "description": "?? Other ways to represent gradient?"
+    },
+    {
+      "name": "aws_signal_strength_V",
+      "title": "AWS signal strength, Volts",
+      "group": "CCS",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "creating_adapter_version",
+      "title": "Version of user adapter creating the file",
+      "group": "Meta",
+      "rank": "broker",
+      "type": "string",
+      "constraints": {
+        "required": true,
+        "unique": false,
+        "maxLength": 40
+      }
+    }
+  ]
+}

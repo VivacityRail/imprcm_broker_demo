@@ -1,0 +1,358 @@
+{
+  "schemaName": "XIRCM_ugms_provider_csv",
+  "schemaVersion": "0.01",
+  "schemaFlavour": "SWT",
+  "schemaCopyright": "RSSB 2019",
+  "fields": [
+    {
+      "name": "file_timestamp_utc",
+      "title": "Timestamp of creation of file or datagram",
+      "group": "Meta",
+      "rank": "core",
+      "type": "datetime",
+      "format": "%Y-%m-%dT%H%M%SZ",
+      "description": "data provider from file name",
+      "constraints": {
+        "required": true,
+        "unique": true,
+        "pattern": "YYYY-MM-DDTHHMMSSZ"
+      }
+    },
+    {
+      "name": "file_name",
+      "title": "Name of file or datagram",
+      "group": "Meta",
+      "rank": "core",
+      "type": "string",
+      "description": "data provider from file name",
+      "constraints": {
+        "required": true,
+        "unique": false,
+        "maxLength": 255
+      }
+    },
+    {
+      "name": "file_uid",
+      "title": "UUID of file, supplied by data provider",
+      "group": "Meta",
+      "rank": "core",
+      "type": "string",
+      "format": "uuid",
+      "description": "supplied by data provider",
+      "constraints": {
+        "required": true,
+        "unique": true
+      }
+    },
+    {
+      "name": "extended_items_metadata",
+      "title": "Application-specific extended data items",
+      "group": "Meta",
+      "rank": "vend",
+      "type": "object",
+      "description": "Application-specific data items, formatted as a JSON object",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 32767
+      }
+    },
+    {
+      "name": "timestamp_recorded_utc",
+      "title": "Timestamp of when data row recorded",
+      "group": "Time",
+      "rank": "core",
+      "type": "datetime",
+      "format": "%Y-%m-%dT%H:%M:%S.%fZ",
+      "description": "as precise as can be made so consecutive data rows have different values",
+      "constraints": {
+        "required": true,
+        "unique": true,
+        "pattern": "YYYY-MM-DDTHH:MM:SS.dddddZ"
+      }
+    },
+    {
+      "name": "extended_items_time",
+      "title": "Application-specific extended data items",
+      "group": "Time",
+      "rank": "vend",
+      "type": "object",
+      "description": "Application-specific data items, formatted as a JSON object",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 32767
+      }
+    },
+    {
+      "name": "ugms_unit_id",
+      "title": "Identifier of UGMS unit",
+      "group": "Equip",
+      "rank": "core",
+      "type": "string",
+      "description": "vendor name for the UGMS unit",
+      "constraints": {
+        "required": true,
+        "unique": false,
+        "maxLength": 100
+      }
+    },
+    {
+      "name": "ugms_unit_uid",
+      "title": "UUID of UGMS unit",
+      "group": "Equip",
+      "rank": "core",
+      "type": "string",
+      "format": "uuid",
+      "description": "supplied by data provider",
+      "constraints": {
+        "required": true,
+        "unique": false
+      }
+    },
+    {
+      "name": "gps_fix_quality",
+      "title": "GPS fix quality",
+      "group": "Travel",
+      "rank": "core",
+      "type": "number",
+      "description": "in format of NMEA http://aprs.gids.nl/nmea/ fix quality in $GPGGA"
+    },
+    {
+      "name": "gps_latitude_deg",
+      "title": "GPS latitude, decimal degress. +ve = North, -ve = South",
+      "group": "Travel",
+      "rank": "core",
+      "type": "number",
+      "description": "decimal degrees, -ve = South of equator. 6dps"
+    },
+    {
+      "name": "gps_longitude_deg",
+      "title": "GPS longitued, decimal degress. +ve = East, -ve = West",
+      "group": "Travel",
+      "rank": "core",
+      "type": "number",
+      "description": "decimal degrees, -ve = West of Greenwich 6dps"
+    },
+    {
+      "name": "speed_as_recorded",
+      "title": "Speed, as recorded",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "directly from input data"
+    },
+    {
+      "name": "speed_as_recorded_unit",
+      "title": "Speed units, as recorded",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "string",
+      "description": "actual unit as recorded - may be mph / kph / m_s",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 20
+      }
+    },
+    {
+      "name": "elapsed_distance_as_recorded_m",
+      "title": "Elapsed distance as recorded, metres",
+      "group": "Travel",
+      "rank": "opt",
+      "type": "number",
+      "description": "convert from elapsed_distance_km"
+    },
+    {
+      "name": "extended_items_geography",
+      "title": "Application-specific extended data items",
+      "group": "Travel",
+      "rank": "vend",
+      "type": "object",
+      "description": "Application-specific data items, formatted as a JSON object",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 32767
+      }
+    },
+    {
+      "name": "left_top_35m_mm",
+      "title": "Left rail top, 35m filter, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "right_top_35m_mm",
+      "title": "Right rail top, 35m filter, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "crosslevel_mm",
+      "title": "Cross-level, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "twist_3m_mm",
+      "title": "Twist on 3m baseline, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "left_top_35m_SD_mm",
+      "title": "Standard deviation of left top 35m, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "right_top_35m_SD_mm",
+      "title": "Standard deviation of right top 35m, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "mean_top_70m_SD_mm",
+      "title": "Standard deviation of mean top 35m, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "twist_3m_SD_mm",
+      "title": "Standard deviation of 3m twist, mm",
+      "group": "Geom",
+      "rank": "core",
+      "type": "number"
+    },
+    {
+      "name": "left_dip_joint_mrad",
+      "title": "Left rail dipped joint angle, millirad",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "right_dip_joint_mrad",
+      "title": "Right rail dipped joint angle, millirad",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "pseudo_align_35m_mm",
+      "title": "Pseudo-alignment on 35m baseline, mm",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "pseudo_align_70m_mm",
+      "title": "Pseudo-alignment on 70m baseline, mm",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "pseudo_align_35m_SD_mm",
+      "title": "Standard deviation of pseudo alignment on 35m baseline, mm",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "pseudo_align_70m_SD_mm",
+      "title": "Standard deviation of pseudo alignment on 70m baseline, mm",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "mean_top_70m_mm",
+      "title": "Mean top, 70m baseline, mm",
+      "group": "Geom",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "extended_items_geometry",
+      "title": "Application-specific extended data items",
+      "group": "Geom",
+      "rank": "vend",
+      "type": "object",
+      "description": "Application-specific data items, formatted as a JSON object",
+      "constraints": {
+        "required": false,
+        "unique": false,
+        "maxLength": 32767
+      }
+    },
+    {
+      "name": "accel_z_wb_ms_2",
+      "title": "Vertical acceleration, Wb filter, m/s squared",
+      "group": "Ride",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "accel_x_wc_ms_2",
+      "title": "Longitudinal acceleration, Wc filter, m/s squared",
+      "group": "Ride",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "accel_x_wd_ms_2",
+      "title": "Longitudinal acceleration, Wd filter, m/s squared",
+      "group": "Ride",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "accel_y_wd_ms_2",
+      "title": "Transverse acceleration, Wd filter, m/s squared",
+      "group": "Ride",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "accel_y_wp_ms_2",
+      "title": "Transverse acceleration, Wp filter, m/s squared",
+      "group": "Ride",
+      "rank": "opt",
+      "type": "number"
+    },
+    {
+      "name": "data_row_uid",
+      "title": "UUID of data row",
+      "group": "Meta",
+      "rank": "core",
+      "type": "string",
+      "format": "uuid",
+      "description": "issued by broker",
+      "constraints": {
+        "required": true,
+        "unique": true
+      }
+    },
+    {
+      "name": "creating_adapter_version",
+      "title": "Version of user adapter creating the file",
+      "group": "Meta",
+      "rank": "broker",
+      "type": "string",
+      "constraints": {
+        "required": true,
+        "unique": false,
+        "maxLength": 40
+      }
+    }
+  ]
+}

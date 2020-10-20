@@ -1,0 +1,218 @@
+swagger: '2.0'
+info:
+  title: UUID Repository API
+  description: >-
+    This API demonstrates a way of referencing and supplying UUIDs for IMP-RCM
+    assets.
+  version: 0.0.3
+  contact:
+    name: Vivacity Rail Consulting Ltd
+    url: 'http://www.vivacityrail.com'
+    email: imprcmapi@vivacityrail.com
+  termsOfService: 'http://docs.imprcm.vivacityrail.com:8080'
+host: api.imprcm.vivacityrail.com
+schemes:
+  - http
+  - https
+paths:
+  '/id-server/entities_by_uuid/{uuid}':
+    parameters:
+      - in: path
+        name: uuid
+        type: string
+        required: true
+    get:
+      summary: get the details for a UUID
+      tags:
+        - get details for uuid
+      operationId: id_server_uuids_uuid_get
+      x-swagger-router-controller: imprcm_uuid_server.controllers.get_details_for_uuid_controller
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/entity_schema_array'
+        '404':
+          description: Nothing matches that uuid
+  /id-server/entities:
+    get:
+      summary: get the uuids for a matching set of details
+      tags:
+        - list entities matching details
+      operationId: id_server_entities_get
+      x-swagger-router-controller: imprcm_uuid_server.controllers.list_entities_matching_details_controller
+      parameters:
+        - in: query
+          name: entity
+          type: string
+        - in: query
+          name: schema
+          type: string
+        - in: query
+          name: fromdate
+          type: string
+      responses:
+        '200':
+          description: OK - list of matching details
+          schema:
+            $ref: '#/definitions/entity_schema_url_array'
+        '404':
+          description: nothing matches the provided details
+    post:
+      summary: add details of an entry and get its uuid
+      tags:
+        - create entry and get uuid
+      operationId: id_server_entities_post
+      x-swagger-router-controller: imprcm_uuid_server.controllers.create_entry_and_get_uuid_controller
+      parameters:
+        - in: body
+          name: new_item
+          schema:
+            $ref: '#/definitions/entity_schema_no_uuid'
+      responses:
+        '201':
+          description: new item added
+          schema:
+            $ref: '#/definitions/entity_schema_with_uri'
+        '400':
+          description: can't add this item - it already exists
+          schema:
+            $ref: '#/definitions/entity_schema_with_uri'
+  '/id-server/entities/{scheme_url}/{name_url}/{fromtimestamp}/{uuid}':
+    parameters:
+      - in: path
+        name: scheme_url
+        type: string
+        required: true
+        description: Naming scheme - in snake_case e.g. european_vehicle_number
+      - in: path
+        name: name_url
+        type: string
+        required: true
+        description: >-
+          name/identifier of the item - in snake_case and URL-ecoded e.g.
+          47%20201 This is a version of the name which will always be used in
+          URLs. The full standard name of the item is in the request
+      - in: path
+        name: fromtimestamp
+        description: >-
+          timestamp of the start of validity of the entity name, in an RFC3339
+          format.
+
+          Valid formats are 
+            YYYY-MM-DDTHH:MM:SSZ
+            YYYY-MM-DDTHH:MM:SS+00:00
+            YYYY-MM-DD
+        type: string
+        required: true
+      - in: path
+        name: uuid
+        type: string
+        required: true
+    put:
+      summary: create or update an item with scheme / name / fromtimestamp
+      tags:
+        - create entry
+      operationId: id_server_uuids_uuid_put
+      x-swagger-router-controller: imprcm_uuid_server.controllers.add_new_item_with_uuid_controller
+      parameters:
+        - in: body
+          name: new_item
+          schema:
+            $ref: '#/definitions/entity_schema_with_uuid'
+      responses:
+        '200':
+          description: success - existing item updated
+          schema:
+            $ref: '#/definitions/entity_schema_with_uri'
+        '201':
+          description: success - new item added
+          schema:
+            $ref: '#/definitions/entity_schema_with_uri'
+definitions:
+  uri:
+    type: string
+    description: >-
+      a Uniform Resource Identifier per RFC 3986
+      https://tools.ietf.org/html/rfc3986
+    example: >-
+      https://api.imprcm.vivacityrail.com/id-server/entities_by_uuid/08277405-4662-4ec6-bfc5-8dcc63e4b893
+  uuid:
+    description: 'a Version 4 UUID per RFC 4122 https://www.ietf.org/rfc/rfc4122.txt'
+    type: string
+    example: 08277405-4662-4ec6-bfc5-8dcc63e4b893
+    pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+  uuid_bracketed:
+    type: string
+    description: >-
+      a bracketed uuid, the uuid per RFC 4122
+      https://www.ietf.org/rfc/rfc4122.txt
+    example: '{4d58d3e8-bd8e-437c-8d06-5cec173457dc}'
+  entity_schema_no_uuid:
+    type: object
+    required:
+      - scheme_url
+      - fromtimestamp
+      - name_url
+    properties:
+      name_url:
+        type: string
+        example: '70370012122'
+        description: >-
+          An identifier of the entity in the given schema. The identifier must
+          be 
+
+          URL-encoded - e.g. '47 201' must be passed as '47%20201' (without the
+          quotes)
+      scheme_url:
+        type: string
+        example: evn
+        description: snake-cased name of a naming scheme in which entities are defined
+      fromtimestamp:
+        type: string
+        example: '2018-03-02T00:00:00Z'
+        description: >-
+          timestamp of the start of validity of the entity name, in an
+          _RFC3339-compliant_ format (https://tools.ietf.org/html/rfc3339)
+
+          valid formats are 
+
+          - YYYY-MM-DDTHH:MM:SSZ
+
+          - YYMMDDTHHMMSSZ
+
+          - YYYYMMDD
+      totimestamp:
+        type: string
+        example: '2022-02-21'
+        description: >-
+          timestamp of the end of validity of the entity name, in ISO 8601
+          format. If blank, assumed to be a long way in the future
+  entity_schema_with_uuid:
+    type: object
+    required:
+      - uuid
+      - entity_detail
+    properties:
+      uuid:
+        $ref: '#/definitions/uuid'
+      entity_detail:
+        $ref: '#/definitions/entity_schema_no_uuid'
+  entity_schema_array:
+    type: array
+    items:
+      $ref: '#/definitions/entity_schema_with_uuid'
+  entity_schema_with_uri:
+    type: object
+    required:
+      - entity_uri
+      - entity_object
+    properties:
+      entity_uri:
+        $ref: '#/definitions/uri'
+      entity_object:
+        $ref: '#/definitions/entity_schema_with_uuid'
+  entity_schema_url_array:
+    type: array
+    items:
+      $ref: '#/definitions/entity_schema_with_uri'

@@ -1,0 +1,140 @@
+/*
+IMP-RCM style overrides
+
+PJ 2018
+*/
+@namespace svgns url(http://www.w3.org/2000/svg);
+
+/*
+Colour overrides to match RSSB palette
+- link is Mid Blue, hovered is Bright Blue
+- navbar is RSSB Dark Blue
+*/
+
+body a {
+	color: #005EB8;
+}
+
+body a:hover {
+	color: #00A5DF;
+}
+
+.navbar-default {
+    background-color: #141B4D;
+}
+
+.navbar-brand img {
+	height: 200%;
+	margin-top: -5%;
+}
+
+/* 
+special imp-rcm formats
+*/
+
+.alert-info {
+    font-size: 14px;
+    background-color: rgba(0,165,223,0.5);
+    border-color: rgba(0,165,223,0.5);
+    color: #333333;
+}
+
+.tip {
+	/*background-color: rgba(127,195,28,0.25); */
+    background-color: rgba(127,195,28,0.5);
+    border-color: rgba(127,195,28,0.5);
+    /* opacity: 0.25; */
+}
+
+/* work in progress */
+.imprcm-wip {
+	background-color: #cccccc;
+/*	font-style: italic;  */
+}
+
+.imprcm-wip:before{
+	content: "WIP...";
+	background-color: #ffff00;
+	font-size: large;
+}
+
+/* new role for strikeout text */
+.strike {
+    text-decoration: line-through;
+}   
+
+/* new classes for tech framework optionality */
+.tech-mand-parent {
+    background-color: #ff0000;
+    color: #ffffff;
+}   
+
+.tech-rec-parent {
+    background-color: #ffff00;
+}   
+
+.tech-opt-parent {
+    background-color: #00ff00;
+}   
+
+/*
+Styling of inline svg graphics
+*/
+svgns|a {
+  cursor: pointer;
+}
+
+svgns|a text {
+  fill: blue; /* Even for text, SVG use fill over color */
+  text-decoration: underline;
+}
+
+svgns|a:hover, svgns|a:active {
+  outline: solid 3px gray;
+}
+
+/* 
+styling of block quotes such as topic, highlights, epigraph
+*/
+blockquote.highlights {
+    padding: 10.5px 21px;
+    margin: 0 0 0px;
+    font-size: 15px;
+    color: #222222;
+	font-style: italic;
+   border-left: 0px solid #dddddd;
+    /* border: 1px solid #ccc; */
+}
+
+blockquote.epigraph {
+    padding: 10.5px 21px;
+    margin: 0 0 21px;
+    font-size: 13px;
+    font-style: italic;
+    border-left: 5px solid #dddddd;
+}
+
+p.rubric {
+    margin-top: 0px;
+    font-weight: normal;
+}
+
+div.topic {
+    border: 1px solid #ccc;
+    padding: 7px 7px 0 7px;
+    margin: 10px 0 10px 0;
+    color: #ffffff;
+    background-color: #00a5df;
+}
+
+p.topic-title {
+    /*font-size: 1.1em;*/
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+div.figure p.caption {
+    padding: 0.1em; 
+    font-style: italic;
+}

@@ -1,0 +1,82 @@
+{
+  "schemaName": "XIRCM_ugms_provider_csv",
+  "schemaVersion": "0.01",
+  "schemaFlavour": "minimal",
+  "schemaCopyright": "RSSB 2019",
+  "fields": [
+    {
+      "name": "file_timestamp_utc",
+      "title": "Timestamp of creation of file or datagram",
+      "group": "Meta",
+      "rank": "core",
+      "type": "datetime",
+      "description": "data provider from file name",
+      "constraints": {
+        "required": true,
+        "unique": true,
+        "pattern": "YYYY-MM-DDTHH:MM:SS"
+      }
+    },
+    {
+      "name": "file_name",
+      "title": "Name of file or datagram",
+      "group": "Meta",
+      "rank": "core",
+      "type": "string",
+      "description": "data provider from file name",
+      "constraints": {
+        "required": true,
+        "unique": false
+      }
+    },
+    {
+      "name": "timestamp_recorded_utc",
+      "title": "Timestamp of when data row recorded",
+      "group": "Time",
+      "rank": "core",
+      "type": "datetime",
+      "description": "as precise as can be made so consecutive data rows have different values",
+      "constraints": {
+        "required": true,
+        "unique": true,
+        "pattern": "YYYY-MM-DDTHH:MM:SS.dddddZ"
+      }
+    },
+    {
+      "name": "ugms_unit_id",
+      "title": "Identifier of UGMS unit",
+      "group": "Equip",
+      "rank": "core",
+      "type": "string",
+      "description": "vendor name for the UGMS unit",
+      "constraints": {
+        "required": true,
+        "unique": false
+      }
+    },
+    {
+      "name": "ugms_unit_uid",
+      "title": "UUID of UGMS unit",
+      "group": "Equip",
+      "rank": "core",
+      "type": "string",
+      "format": "uuid",
+      "description": "supplied by data provider",
+      "constraints": {
+        "required": true,
+        "unique": false
+      }
+    },
+    {
+      "name": "creating_adapter_version",
+      "title": "Version of user adapter creating the file",
+      "group": "Meta",
+      "rank": "broker",
+      "type": "string",
+      "constraints": {
+        "required": true,
+        "unique": false
+      }
+    }
+  ]
+}

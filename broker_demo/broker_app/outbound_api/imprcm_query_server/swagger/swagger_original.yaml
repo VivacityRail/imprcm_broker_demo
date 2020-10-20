@@ -1,0 +1,179 @@
+swagger: '2.0'
+info:
+  title: Query API
+  description: >-
+    This API demonstrates a way of querying RCM data via an API
+  version: 0.0.1
+  contact:
+    name: Vivacity Rail Consulting Ltd
+    url: 'http://www.vivacityrail.com'
+    email: imprcmapi@vivacityrail.com
+  termsOfService: 'http://docs.imprcm.vivacityrail.com:8080'
+host: api.imprcm.vivacityrail.com
+schemes:
+  - http
+  - https
+paths:
+  '/query_server/infra/items_by_uuid/{uuid}':
+    parameters:
+      - in: path
+        name: uuid
+        type: string
+        required: true
+    get:
+      summary: get the details of an infrastructure item identified by UUID
+      tags:
+        - get details for uuid
+      operationId: imprcm_query_server.api.infra_uuids_uuid_get
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/s_and_c_unit'
+        '404':
+          description: Nothing matches that uuid
+  /query_server/infra/s_and_c_units:
+    get:
+      summary: get the details for a matching set of details
+      tags:
+        - list entities matching details
+      operationId: imprcm_query_server.api.infra_sandcs_get
+      parameters:
+        - in: query
+          name: elr
+          type: string
+      produces:
+        - application/json
+        - text/csv
+      responses:
+        '200':
+          description: OK - list of matching details
+          schema:
+            $ref: '#/definitions/s_and_c_unit_array'
+        '404':
+          description: nothing matches the provided details
+  '/query_server/infra/s_and_c_units/{unit_id}/summary':
+    parameters:
+      - in: path
+        name: unit_id
+        type: string
+        required: true
+    get:
+      summary: return the summary geometry for the specified s and c unit
+      tags:
+        - list the summary geometry details of s and c unit
+      operationId: imprcm_query_server.api.infra_s_and_c_summary_get
+      produces:
+        - application/json
+        - text/csv
+      parameters:
+        - in: query
+          name: from_date
+          type: string
+          description: start date for data extract
+        - in: query
+          name: to_date
+          type: string
+          description: end date for data extract
+      responses:
+        200:
+          description: OK - summary geometry for selected unit / date range. May be blank if no data for range
+          schema:
+            $ref: '#/definitions/s_and_c_summary_array'
+        404:
+          description: Not Found - no data matches the requested S&C unit  
+definitions:
+  uri:
+    type: string
+    description: >-
+      a Uniform Resource Identifier per RFC 3986
+      https://tools.ietf.org/html/rfc3986
+    example: >-
+      https://api.imprcm.vivacityrail.com/query-server/infra/items_by_uuid/08277405-4662-4ec6-bfc5-8dcc63e4b893
+  uuid:
+    description: 'a Version 4 UUID per RFC 4122 https://www.ietf.org/rfc/rfc4122.txt'
+    type: string
+    example: 08277405-4662-4ec6-bfc5-8dcc63e4b893
+    pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+  s_and_c_unit:
+    type: object
+    required:
+      - s_and_c_unit_id
+      - uuid
+      - uri
+    properties:
+      s_and_c_unit_id:
+        description: 'identifier of the S and C unit'
+        type: string
+        example: SW103A
+      uuid:
+        $ref: '#/definitions/uuid'
+      uri:
+        $ref: '#/definitions/uri'
+  s_and_c_unit_array:
+    type: array
+    items:
+      $ref: '#/definitions/s_and_c_unit'
+  s_and_c_summary:
+    type: object
+    properties:
+      unique_id:
+        description: 'identifier of the S and C unit'
+        type: string
+        example: SW103A
+      sample_date:
+        description: 'date at which geometry sampled'
+      left_top_35m_SD_mm:
+        description: 'left top 35m SD, mm'
+        type: string
+      right_top_35m_SD_mm:
+        description: 'right top 35m SD, mm'
+        type: number
+      mean_top_70m_SD_mm:
+        description: 'mean top 70m SD, mm'
+        type: number
+      twist_3m_SD_mm:
+        description: 'twist 3m SD, mm'
+        type: number
+      pseudo_align_35m_SD_mm:
+        description: 'pseudo alignment 35m SD, mm'
+        type: number
+      pseudo_align_70m_SD_mm:
+        description: 'pseudo alignment 70m SD, mm'
+        type: number
+      direction_of_travel:
+        description: 'direction of travel'
+        type: string
+      main_elr:
+        description: 'main ELR'
+        type: string
+        example: 'MLN1'
+      main_track_id:
+        description: 'main Track ID'
+        type: string
+        example: '2200'
+      miles_decimal_from:
+        description: 'starting miles.decimal'
+        type: number
+        example: 121.1045
+      miles_plus_yards_from:
+        description: 'starting miles+yards'
+        type: string
+        example: '121+0184'
+      miles_cln_chains_from:
+        description: 'starting miles:chains'
+        type: string
+        example: '121:08'
+      miles_decimal_to:
+        description: 'end miles.decimal'
+        type: number
+      miles_plus_yards_to:
+        description: 'end miles+yards'
+        type: string
+      miles_cln_chains_to:
+        description: 'end miles:chains'
+        type: string
+  s_and_c_summary_array:
+    type: array
+    items:
+      $ref: '#/definitions/s_and_c_summary'

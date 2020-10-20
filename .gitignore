@@ -1,0 +1,37 @@
+doc/docs/_site/
+.sass-cache/
+.jekyll-metadata
+doc/docs/_build/
+#doc/docs/_static/downloads/pdf/IMPRCM_documentation.pdf
+
+~*.*
+.idea/
+python_env/
+*.pyc
+UTGM*.csv
+venv/
+Lib/
+Scripts/
+
+# stuff from the flask tutorial
+__pycache__/
+
+instance/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+dist/
+build/
+*.egg-info/
+.tox/
+python_venv/
+
+# yaml files created by the python code
+broker_demo/uuid-server/imprcm_uuid_server/swagger/swagger.yaml
+broker_demo/broker_app/outbound_api/imprcm_query_server/swagger/swagger.yaml
+
+*.bak
+
+delivery/

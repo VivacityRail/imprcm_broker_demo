@@ -1,0 +1,94 @@
+openapi: 3.0.1
+info:
+  title: XIRCM Demo API
+  description: >-
+    This API demonstrates a simple broker-based approach to the interchange of
+    rail remote condition monitoring data.
+  version: 0.0.1
+  contact:
+    name: Vivacity Rail Consulting Ltd
+    url: 'http://www.vivacityrail.com'
+    email: imprcmapi@vivacityrail.com
+  termsOfService: 'http://docs.imprcm.vivacityrail.com:8080'
+servers:
+  - url: 'http://api.imprcm.vivacityrail.com'
+    description: live API
+  - url: 'http://api-demo.imprcm.vivacityrail.com'
+    description: demonstration API
+paths:
+  /sources:
+    get:
+      tags:
+        - Sources of RCM data
+      summary: Get list of sources of RCM data
+      description: Get a list of all the sources of RCM data available to be queried
+      operationId: RCMDataSources
+      parameters:
+        - name: type
+          in: query
+          description: >-
+            **RCM Data Type**. *Example: `OLE`*. The type of RCM data to
+            restrict the list to.
+          schema:
+            type: string
+        - name: mode
+          in: query
+          description: '**Mode**. *Example: csv*. The format of the returned data'
+          schema:
+            type: string
+            enum:
+              - json
+              - csv
+              - html
+            default: csv
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200'
+  /tracks:
+    get:
+      tags:
+        - Tracks for which RCM data are available
+      summary: Get list of track sections/ ELRs for which data are available
+      description: >-
+        Get a list of track sections (identified by geography or ELR) for which
+        data are available
+      operationId: TrackSections
+      parameters:
+        - name: ELR
+          in: query
+          description: '**ELR**. *Example: `MLN1`*'
+          schema:
+            type: string
+        - name: bb_nw
+          in: query
+          description: >-
+            bb_nw. Example: `50.2341 -1.0012`. The lat/long coordinates of
+            the NW corner of a bounding rectangle in decimal degrees.
+          schema:
+            type: string
+        - name: bb_se
+          in: query
+          description: >-
+            bb_se. Example: `50.0322 -0.8012`. The lat/long coordinates of
+            the SE corner of a bounding rectangle in decimal degrees.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200'
+components:
+  schemas:
+    '200':
+      title: Successful response
+      type: object
+      properties:
+        name:
+          type: string

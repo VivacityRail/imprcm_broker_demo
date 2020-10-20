@@ -1,0 +1,107 @@
+# Docker compose file for IMPRCM containers
+
+# needs env variables to define the ports (which have defaults if not specified)
+#  data store database port - $PORT_SDB (5432)
+#  outbound interface api port - $PORT_OBAPI (8085)
+#  uuid server database port - $PORT_UDB (5433)
+#  uuid server interface api port - $PORT_UUAPI (8080)
+
+# This version doesn't have a pipeline - for debugging purposes only
+ 
+
+version: '3'
+
+services:
+  # data store postgresql dataSbase
+  data_store_db:
+    container_name: imprcm_demo_datastore
+    build: ./data_store 
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: fred
+    ports:
+    - "${PORT_SDB:-5432}:5432"
+    volumes:
+    #- ./data_store/sql_scripts:/docker-entrypoint-initdb.d
+    - imprcm_data_store:/var/lib/postgresql/data
+    networks:
+    - imprcm_broker_internal
+
+
+  # outbound API
+  outbound_api:
+    container_name: imprcm_sandc_api
+    depends_on:
+    - data_store_db
+    build: ./outbound_api
+    restart: always
+    ports:
+    - ${PORT_OBAPI:-8085}:8085
+    networks:
+    - imprcm_broker_internal
+    command: --port 8085 --extport ${PORT_OBAPI:-8085} --database postgresql://imprcm_demo:imprcm_demo@imprcm_demo_datastore:5432/imprcm_demo_ugms_touchdown
+
+
+  # uuid data store
+  uuid_store_db:
+    container_name: imprcm_demo_uuidstore
+    build: ./uuid_db 
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: fred
+    ports:
+    - ${PORT_UDB:-5433}:5432
+    volumes:
+    #- ./data_store/sql_scripts:/docker-entrypoint-initdb.d
+    - imprcm_uuid_store:/var/lib/postgresql/data
+    networks:
+    - imprcm_broker_internal
+
+
+  # uuid server API
+  uuid_server:
+    container_name: imprcm_uuid_api
+    depends_on:
+    - uuid_store_db
+    build: ./uuid_server
+    restart: always
+    ports:
+    - ${PORT_UUAPI:-8080}:8080
+    networks:
+    - imprcm_broker_internal
+    command: --port 8080 --database postgresql://imprcm_uuid:imprcm_uuid@imprcm_demo_uuidstore:5432/imprcm_demo_uuid_db
+
+  # inbound ugms loader
+  ugms-inbound-loader:
+    container_name: imprcm_data_loader_ugms
+    build: ./inbound_ugms
+    depends_on:
+    - data_store_db
+    command: /data/inbox  "host='imprcm_demo_datastore' port='5432' dbname='imprcm_demo_ugms_touchdown' user='imprcm_demo' password='imprcm_demo'"
+    volumes: 
+    - ./inbound_ugms/data:/data
+    networks:
+    - imprcm_broker_internal
+
+
+  # processing pipeline
+  # ugms-pipeline:
+  #   container_name: imprcm_ugms_pipeline
+  #   build: ./processing_pipeline
+  #   depends_on:
+  #   - data_store_db
+  #   command:  --connection "host='imprcm_demo_datastore' port='5432' dbname='imprcm_demo_ugms_touchdown' user='imprcm_demo' password='imprcm_demo'"
+  #   #volumes: 
+  #   #- ./inbound_ugms/data:/data
+  #   networks:
+  #   - imprcm_broker_internal
+
+
+
+
+volumes:
+  imprcm_data_store:
+  imprcm_uuid_store:
+
+networks:
+  imprcm_broker_internal:

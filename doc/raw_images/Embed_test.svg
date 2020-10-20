@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:lucid="lucid" width="480" height="160">
+    <g transform="translate(-140 -200)" lucid:page-tab-id="0_0">
+        <path d="M0 0h1870.4v1323.2H0z" fill="#fff" />
+        <a xlink:href="http://docs2.imprcm.vivacityrail.com/investigate.html" target="_top" style="cursor:pointer;">
+            <path d="M160 220h160v120H160z" stroke="#000" stroke-width="2" fill="#fff" />
+            <use xlink:href="#a" transform="matrix(1,0,0,1,165,225) translate(46.5 58.6)" />
+            <use xlink:href="#b" transform="matrix(1,0,0,1,165,225) translate(93.5 58.6)" />
+            <path class="lucid-link lucid-hotspot lucid-overlay-hotspot" d="M160 220h160v120H160z" fill="none" />
+        </a>
+        <a xlink:href="http://docs2.imprcm.vivacityrail.com/technical.html" target="_top" style="cursor:pointer;">
+            <path d="M440 220h160v120H440z" stroke="#000" stroke-width="2" fill="#fff" />
+            <use xlink:href="#a" transform="matrix(1,0,0,1,445,225) translate(46.5 58.6)" />
+            <use xlink:href="#c" transform="matrix(1,0,0,1,445,225) translate(93.5 58.6)" />
+            <path class="lucid-link lucid-hotspot lucid-overlay-hotspot" d="M440 220h160v120H440z" fill="none" />
+        </a>
+        <path d="M321 280h99.76" stroke="#000" stroke-width="2" fill="none" />
+        <path d="M321 281h-1v-2h1zM435.76 280l-14.26 4.64v-9.28z" />
+        <path d="M439 280l-18.5 6v-12zm-16.5 3.26l10.03-3.26-10.03-3.26z" />
+        <defs>
+            <path d="M30-248c87 1 191-15 191 75 0 78-77 80-158 76V0H30v-248zm33 125c57 0 124 11 124-50 0-59-68-47-124-48v98" id="d" />
+            <path d="M141-36C126-15 110 5 73 4 37 3 15-17 15-53c-1-64 63-63 125-63 3-35-9-54-41-54-24 1-41 7-42 31l-33-3c5-37 33-52 76-52 45 0 72 20 72 64v82c-1 20 7 32 28 27v20c-31 9-61-2-59-35zM48-53c0 20 12 33 32 33 41-3 63-29 60-74-43 2-92-5-92 41" id="e" />
+            <path d="M177-190C167-65 218 103 67 71c-23-6-38-20-44-43l32-5c15 47 100 32 89-28v-30C133-14 115 1 83 1 29 1 15-40 15-95c0-56 16-97 71-98 29-1 48 16 59 35 1-10 0-23 2-32h30zM94-22c36 0 50-32 50-73 0-42-14-75-50-75-39 0-46 34-46 75s6 73 46 73" id="f" />
+            <path d="M100-194c63 0 86 42 84 106H49c0 40 14 67 53 68 26 1 43-12 49-29l28 8c-11 28-37 45-77 45C44 4 14-33 15-96c1-61 26-98 85-98zm52 81c6-60-76-77-97-28-3 7-6 17-6 28h103" id="g" />
+            <g id="a">
+                <use transform="matrix(0.05,0,0,0.05,0,0)" xlink:href="#d" />
+                <use transform="matrix(0.05,0,0,0.05,12,0)" xlink:href="#e" />
+                <use transform="matrix(0.05,0,0,0.05,22,0)" xlink:href="#f" />
+                <use transform="matrix(0.05,0,0,0.05,32,0)" xlink:href="#g" />
+            </g>
+            <path d="M27 0v-27h64v-190l-56 39v-29l58-41h29v221h61V0H27" id="h" />
+            <use transform="matrix(0.05,0,0,0.05,0,0)" xlink:href="#h" id="b" />
+            <path d="M101-251c82-7 93 87 43 132L82-64C71-53 59-42 53-27h129V0H18c2-99 128-94 128-182 0-28-16-43-45-43s-46 15-49 41l-32-3c6-41 34-60 81-64" id="i" />
+            <use transform="matrix(0.05,0,0,0.05,0,0)" xlink:href="#i" id="c" />
+        </defs>
+    </g>
+</svg>
